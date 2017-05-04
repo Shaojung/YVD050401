@@ -2,12 +2,15 @@ package com.example.yvtc.yvd050401;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
     NotificationManager manager;
+    final int NOTIFICATION_ID = 321;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,12 +19,16 @@ public class MainActivity extends AppCompatActivity {
     }
     public void click1(View v)
     {
+        Intent it = new Intent(MainActivity.this, DetailActivity.class);
+        PendingIntent pi = PendingIntent.getActivity(MainActivity.this, 123, it, PendingIntent.FLAG_UPDATE_CURRENT);
         Notification.Builder builder = new Notification.Builder(MainActivity.this);
         builder.setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("這是通知")
-                .setContentText("這是通知的內容.....");
+                .setContentText("這是通知的內容.....")
+                .setContentIntent(pi)
+                .setAutoCancel(true);
         Notification notification = builder.build();
-        manager.notify(321, notification);
+        manager.notify(NOTIFICATION_ID, notification);
 
     }
 }
